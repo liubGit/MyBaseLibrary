@@ -4,6 +4,8 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import com.example.basemodel.utils.AlertToast
+import com.example.basemodel.utils.ToastUtils
 import com.example.basemodel.widget.StatusBarUtils
 import java.lang.ref.WeakReference
 
@@ -73,5 +75,20 @@ abstract class AbstractMvpActivity<T : BasePresent<BaseView>> : AbstractActivity
         }
     }
 
+    override fun showToastMessage(msg: String) {
+        showToastMessage(msg, true)
+    }
+
+    override fun showToastMessage(msgResId: Int) {
+        showToastMessage(resources.getString(msgResId), true)
+    }
+
+    override fun showToastMessage(msg: CharSequence, center: Boolean) {
+        if (center) {
+            AlertToast().make(window.decorView.context, msg).show()
+        } else {
+            ToastUtils().show(applicationContext, msg)
+        }
+    }
 
 }
